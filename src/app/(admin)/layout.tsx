@@ -1,9 +1,10 @@
-'use client'; // Must be client to use useRouter & Redux
+'use client'; // Must be a client component to use hooks like useRouter and useSelector
 
+import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSelector } from "react-redux";
 import NavBar from "@/components/layout/NavBar";
-import { AdminState } from "@/store/reducerSlice/adminReducer";
+import { RootState } from "@/store/store"; // RootState from your store
 import { Montserrat } from "next/font/google";
 
 const montserrat = Montserrat({
@@ -17,17 +18,21 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Get admin login state from Redux
   const isAdminLoggedIn = useSelector(
-    (state: { admin: AdminState }) => state.admin.isAdminLoggedIn
+    (state: RootState) => state.admin.isAdminLoggedIn
   );
 
   // Redirect to login if not logged in
-  if (!isAdminLoggedIn) {
-    router.push("/admin/login");
-    return null; // Prevent rendering
-  }
+  useEffect(() => {
+    if (!isAdminLoggedIn) {
+      router.replace("/admin/login"); // use replace to prevent back navigation
+    }
+  }, [isAdminLoggedIn, router]);
+
+  // While redirecting, don't render admin content
+  if (!isAdminLoggedIn) return null;
 
   return (
-    <div className={`${montserrat.variable} h-screen bg-app-bg`}>
+    <div className={`${montserrat.variable} min-h-screen bg-app-bg`}>
       <NavBar />
       <div className="p-5 md:py-10 md:px-25">
         {children}

@@ -76,6 +76,7 @@ export const adminSlice = createSlice({
         state.isAdminLoggedIn = false;
       })
       .addCase(adminLogin.fulfilled, (state, { payload }) => {
+        console.log("adminLogin payload", payload);
         state.error = null;
         state.isAdminLoggedIn = true;
         state.adminDetail = payload.data ?? null;
