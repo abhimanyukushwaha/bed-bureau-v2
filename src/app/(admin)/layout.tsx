@@ -22,7 +22,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   // Redirect to login if not logged in
   if (!isAdminLoggedIn) {
-    router.push("/admin/login");
+    router.push("/login");
     return null; // Prevent rendering
   }
 

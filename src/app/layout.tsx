@@ -2,6 +2,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
+import AppInitializer from "@/middleware/AppInitializer";
 const montserrat = Montserrat({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -22,12 +23,13 @@ export default function RootLayout({
     <html lang="en" className={montserrat.variable}>
       <body className="h-full">
         <Providers>
+          <AppInitializer />
           {children}
           <Toaster
             position="top-right"
             reverseOrder={false}
             toastOptions={{
-              duration: 4000,
+              duration: 2000,
               style: {
                 padding: "16px",
                 borderRadius: "12px",

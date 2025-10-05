@@ -47,7 +47,7 @@ export default function Page() {
       };
       const result = await dispatch(adminLogin(loginPayload)).unwrap();
       toast.success("Login successful!"); // ✅ success toast
-      router.push("/admin/dashboard"); // Redirect to dashboard
+      router.push("/manage-client"); // Redirect to manage-client
     } catch (err: unknown) {
       const errorMessage = err instanceof Error ? err.message : "Login failed";
       toast.error(errorMessage); // ❌ error toast

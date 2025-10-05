@@ -16,6 +16,8 @@ import {
 import { AddClientFields as Fields } from "@/data/fields";
 import { generateSchema } from "@/lib/SchemaGenerator";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import z from "zod";
 
@@ -23,16 +25,26 @@ const schema = generateSchema(Fields);
 type FormData = z.infer<typeof schema>;
 
 export default function Page() {
-  const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm<FormData>({
-      resolver: zodResolver(schema),
-      mode: "all",
-    });
+  const router = useRouter();
 
-   function submit(data: FormData) {
+  // useEffect(() => {
+  //   const auth = localStorage.getItem("authorization");
+  //   console.log("Auth Check in Page.tsx:", auth);
+  //   if (!auth) {
+  //     router.replace("../login"); // client-side safety net
+  //   }
+  // }, [router]);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+    mode: "all",
+  });
+
+  function submit(data: FormData) {
     alert("form submitted successfully...");
     console.table(data);
   }
